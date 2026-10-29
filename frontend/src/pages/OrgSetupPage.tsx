@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import {
   Building2, Clock, MapPin, Calendar, Briefcase, Plus, Trash2,
-  CheckCircle2, AlertCircle, Save, ShieldCheck, RefreshCw
+  CheckCircle2, AlertCircle, Save, ShieldCheck, RefreshCw, Settings2
 } from 'lucide-react';
 import { api } from '../services/api.js';
 import { useAuth } from '../context/AuthContext.js';
+import { useToast } from '../context/ToastContext.js';
 import confetti from 'canvas-confetti';
 
 export function OrgSetupPage() {
   const { user } = useAuth();
+  const { showToast } = useToast();
   const isAdmin = user?.role === 'Admin';
 
   const [activeTab, setActiveTab] = useState<'settings' | 'departments' | 'designations' | 'leaves' | 'holidays'>('settings');
@@ -83,9 +85,12 @@ export function OrgSetupPage() {
       const res = await api.put('/org/settings', settings);
       setSettings(res.settings);
       setMsg({ type: 'success', text: 'Company rules and settings saved successfully.' });
+      showToast('Company configuration and geofence parameters saved.', 'success');
       confetti({ particleCount: 40, spread: 45 });
     } catch (err: any) {
-      setMsg({ type: 'error', text: err.message || 'Failed to save settings' });
+      const errorMsg = err.message || 'Failed to save settings';
+      setMsg({ type: 'error', text: errorMsg });
+      showToast(errorMsg, 'error');
     } finally {
       setSaving(false);
     }
@@ -99,20 +104,20 @@ export function OrgSetupPage() {
       setNewDeptName('');
       setNewDeptDesc('');
       loadAll();
-      setMsg({ type: 'success', text: 'Department created.' });
+      showToast('Department registered successfully.', 'success');
     } catch (err: any) {
-      setMsg({ type: 'error', text: err.message });
+      showToast(err.message || 'Failed to add department', 'error');
     }
   };
 
   const handleDeleteDept = async (id: number) => {
-    if (!isAdmin || !confirm('Are you sure?')) return;
+    if (!isAdmin || !confirm('Are you sure you want to delete this department?')) return;
     try {
       await api.delete(`/org/departments/${id}`);
       loadAll();
-      setMsg({ type: 'success', text: 'Department deleted.' });
+      showToast('Department removed.', 'info');
     } catch (err: any) {
-      setMsg({ type: 'error', text: err.message });
+      showToast(err.message || 'Failed to delete department', 'error');
     }
   };
 
@@ -123,20 +128,20 @@ export function OrgSetupPage() {
       await api.post('/org/designations', { name: newDesigName, department_id: Number(newDesigDeptId) });
       setNewDesigName('');
       loadAll();
-      setMsg({ type: 'success', text: 'Designation created.' });
+      showToast('Designation role created.', 'success');
     } catch (err: any) {
-      setMsg({ type: 'error', text: err.message });
+      showToast(err.message || 'Failed to create designation', 'error');
     }
   };
 
   const handleDeleteDesig = async (id: number) => {
-    if (!isAdmin || !confirm('Are you sure?')) return;
+    if (!isAdmin || !confirm('Are you sure you want to delete this designation?')) return;
     try {
       await api.delete(`/org/designations/${id}`);
       loadAll();
-      setMsg({ type: 'success', text: 'Designation deleted.' });
+      showToast('Designation removed.', 'info');
     } catch (err: any) {
-      setMsg({ type: 'error', text: err.message });
+      showToast(err.message || 'Failed to delete designation', 'error');
     }
   };
 
@@ -148,20 +153,20 @@ export function OrgSetupPage() {
       setNewHolidayName('');
       setNewHolidayDate('');
       loadAll();
-      setMsg({ type: 'success', text: 'Public holiday added.' });
+      showToast('Public holiday scheduled.', 'success');
     } catch (err: any) {
-      setMsg({ type: 'error', text: err.message });
+      showToast(err.message || 'Failed to add holiday', 'error');
     }
   };
 
   const handleDeleteHoliday = async (id: number) => {
-    if (!isAdmin || !confirm('Are you sure?')) return;
+    if (!isAdmin || !confirm('Are you sure you want to delete this holiday?')) return;
     try {
       await api.delete(`/org/holidays/${id}`);
       loadAll();
-      setMsg({ type: 'success', text: 'Holiday removed.' });
+      showToast('Holiday removed.', 'info');
     } catch (err: any) {
-      setMsg({ type: 'error', text: err.message });
+      showToast(err.message || 'Failed to delete holiday', 'error');
     }
   };
 

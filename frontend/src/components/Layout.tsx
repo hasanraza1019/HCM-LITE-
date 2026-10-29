@@ -4,7 +4,7 @@ import {
   Building2, LayoutDashboard, Users, Clock, CalendarDays,
   FileSpreadsheet, Megaphone, ShieldCheck, Settings, LogOut,
   Bell, Sun, Moon, Menu, X, CheckCircle, ChevronDown, CheckCheck,
-  ClipboardList, UserCheck, Sparkles, Activity
+  ClipboardList, UserCheck, Sparkles, Activity, Receipt
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.js';
 import { useTheme } from '../context/ThemeContext.js';
@@ -60,6 +60,7 @@ export function Layout() {
       { label: 'Employees Directory', path: '/employees', icon: Users },
       { label: 'Daily Attendance Board', path: '/attendance/board', icon: Clock },
       { label: 'Payroll & Payslips', path: '/payroll', icon: FileSpreadsheet },
+      { label: 'Expense Claims', path: '/expenses', icon: Receipt },
       { label: 'Announcements', path: '/announcements', icon: Megaphone },
       { label: 'Audit Logs', path: '/admin/audit', icon: ClipboardList }
     ],
@@ -69,6 +70,7 @@ export function Layout() {
       { label: 'Daily Attendance Board', path: '/attendance/board', icon: Clock },
       { label: 'Attendance Corrections', path: '/attendance/corrections', icon: Clock },
       { label: 'Leave Approvals', path: '/leave/inbox', icon: CalendarDays },
+      { label: 'Expense Approvals', path: '/expenses', icon: Receipt },
       { label: 'Monthly Payroll', path: '/payroll', icon: FileSpreadsheet },
       { label: 'Announcements', path: '/announcements', icon: Megaphone }
     ],
@@ -76,6 +78,7 @@ export function Layout() {
       { label: 'My Dashboard', path: '/employee', icon: LayoutDashboard },
       { label: 'My Attendance Calendar', path: '/attendance/my', icon: Clock },
       { label: 'Apply for Leave', path: '/leave/my', icon: CalendarDays },
+      { label: 'Expense Claims', path: '/expenses', icon: Receipt },
       { label: 'My Payslips', path: '/payslips', icon: FileSpreadsheet },
       { label: 'My Profile', path: '/profile', icon: UserCheck }
     ]

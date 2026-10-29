@@ -13,6 +13,7 @@ import payrollRoutes from './routes/payrollRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
 import commsRoutes from './routes/commsRoutes.js';
+import expenseRoutes from './routes/expenseRoutes.js';
 
 dotenv.config();
 
@@ -86,6 +87,7 @@ app.use('/api/payroll', payrollRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/comms', commsRoutes);
+app.use('/api/expenses', expenseRoutes);
 
 // 404 Handler
 app.use((req: Request, res: Response) => {

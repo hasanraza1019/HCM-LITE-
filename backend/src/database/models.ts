@@ -317,3 +317,24 @@ const aiLogSchema = new Schema(
 );
 export const AiLog = getOrCreateModel('AiLog', aiLogSchema);
 
+// 17. Expense Claims
+const expenseClaimSchema = new Schema(
+  {
+    id: { type: Number, required: true, unique: true },
+    employee_id: { type: Number, required: true },
+    employee_name: { type: String, required: true },
+    title: { type: String, required: true },
+    category: { type: String, required: true },
+    amount: { type: Number, required: true },
+    date: { type: String, required: true },
+    description: { type: String, default: '' },
+    receipt_url: { type: String, default: null },
+    status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
+    reviewer_comment: { type: String, default: '' },
+    reviewed_by: { type: String, default: null },
+    created_at: { type: String, required: true }
+  },
+  { versionKey: false, collection: 'expense_claims' }
+);
+export const ExpenseClaim = getOrCreateModel('ExpenseClaim', expenseClaimSchema);
+

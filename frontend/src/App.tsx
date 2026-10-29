@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext.js';
 import { ThemeProvider } from './context/ThemeContext.js';
+import { ToastProvider } from './context/ToastContext.js';
 
 // Layout & Auth Pages
 import { Layout } from './components/Layout.js';
@@ -28,6 +29,7 @@ import { PayslipsPage } from './pages/PayslipsPage.js';
 import { AnnouncementsPage } from './pages/AnnouncementsPage.js';
 import { AuditLogsPage } from './pages/AuditLogsPage.js';
 import { ProfilePage } from './pages/ProfilePage.js';
+import { ExpensesPage } from './pages/ExpensesPage.js';
 
 function ProtectedRoute({ children, allowedRoles }: { children: React.ReactNode; allowedRoles?: string[] }) {
   const { user, isLoading, isInitialized } = useAuth();
@@ -74,7 +76,8 @@ export function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <BrowserRouter>
+        <ToastProvider>
+          <BrowserRouter>
           <Routes>
             {/* Public Setup & Auth */}
             <Route path="/setup" element={<SetupPage />} />
@@ -227,12 +230,21 @@ export function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="expenses"
+                element={
+                  <ProtectedRoute allowedRoles={['Admin', 'HR', 'Employee']}>
+                    <ExpensesPage />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
 
             {/* Catch-all */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
+        </ToastProvider>
       </AuthProvider>
     </ThemeProvider>
   );
