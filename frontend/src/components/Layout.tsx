@@ -84,7 +84,7 @@ export function Layout() {
   const currentNav = navItems[role] || navItems.Employee;
 
   return (
-    <div className="min-h-screen bg-mesh-light dark:bg-mesh-dark flex flex-col font-sans transition-colors duration-300">
+    <div className="min-h-screen bg-mesh text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-300">
       {/* Top Ambient Glow Line */}
       <div className="h-1 w-full bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 shadow-sm" />
 
