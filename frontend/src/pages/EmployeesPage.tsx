@@ -205,25 +205,30 @@ EMP-102,Fatima Zahra,fatima.zahra@saylaniit.com,HR,HR Specialist,65000,2026-02-0
 EMP-103,Hamza Tariq,hamza.tariq@saylaniit.com,Sales,Account Executive,55000,2026-03-10`;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7 pb-10">
       {/* Title & Actions Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl glass-panel relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-36 bg-blue-500/10 blur-3xl pointer-events-none" />
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-blue-500/15 text-blue-400 border border-blue-500/20 mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-ping" />
+            Human Capital Directory
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 dark:text-white">
             Employee Directory ({totalEmps})
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Personnel registry, Employee 360 profiles, salary setup, and bulk CSV onboarding.
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
+            Personnel registry, Employee 360 profiles, salary compensation setups, and bulk CSV onboarding.
           </p>
         </div>
 
         {isHRorAdmin && (
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="relative z-10 flex flex-wrap items-center gap-2.5">
             <button
               onClick={() => setCsvModalOpen(true)}
-              className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold hover:bg-slate-50 transition"
+              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 text-xs font-bold shadow-xs transition backdrop-blur-md"
             >
-              <Upload className="w-3.5 h-3.5" />
+              <Upload className="w-4 h-4 text-blue-400" />
               <span>CSV Import</span>
             </button>
 
@@ -234,15 +239,15 @@ EMP-103,Hamza Tariq,hamza.tariq@saylaniit.com,Sales,Account Executive,55000,2026
                   alert(err.message || 'CSV export failed')
                 )
               }
-              className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold hover:bg-slate-50 transition"
+              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 text-xs font-bold shadow-xs transition backdrop-blur-md"
             >
-              <Download className="w-3.5 h-3.5" />
+              <Download className="w-4 h-4 text-emerald-400" />
               <span>CSV Export</span>
             </button>
 
             <button
               onClick={() => setRegisterModalOpen(true)}
-              className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md transition"
+              className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-blue-500/25 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
             >
               <UserPlus className="w-4 h-4" />
               <span>Register Employee</span>
@@ -252,15 +257,15 @@ EMP-103,Hamza Tariq,hamza.tariq@saylaniit.com,Sales,Account Executive,55000,2026
       </div>
 
       {/* Search & Filters */}
-      <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
-        <form onSubmit={handleSearchSubmit} className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
+      <div className="p-4 sm:p-5 rounded-3xl glass-card flex flex-col sm:flex-row items-center justify-between gap-3">
+        <form onSubmit={handleSearchSubmit} className="relative w-full sm:w-96">
+          <Search className="w-4 h-4 absolute left-3.5 top-3 text-slate-400" />
           <input
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Search by name, code, email..."
-            className="w-full pl-9 pr-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Search by name, code, department, email..."
+            className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-white/10 text-xs bg-white/5 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-inner"
           />
         </form>
 
@@ -271,7 +276,7 @@ EMP-103,Hamza Tariq,hamza.tariq@saylaniit.com,Sales,Account Executive,55000,2026
               setSelectedDept(e.target.value);
               setPage(1);
             }}
-            className="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs bg-white dark:bg-slate-800 w-full sm:w-auto"
+            className="px-4 py-2.5 rounded-2xl border border-white/10 text-xs bg-slate-900 text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 w-full sm:w-auto shadow-sm"
           >
             <option value="">All Departments</option>
             {departments.map(d => (
@@ -282,58 +287,63 @@ EMP-103,Hamza Tariq,hamza.tariq@saylaniit.com,Sales,Account Executive,55000,2026
       </div>
 
       {/* Employees Table */}
-      <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
+      <div className="rounded-3xl glass-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 uppercase font-bold text-[10px] tracking-wider border-b border-slate-200 dark:border-slate-800">
+            <thead className="bg-white/[0.02] text-slate-400 uppercase font-bold text-[10px] tracking-wider border-b border-white/10">
               <tr>
-                <th className="px-4 py-3">Employee</th>
-                <th className="px-4 py-3">Department & Role</th>
-                <th className="px-4 py-3">Contact</th>
-                <th className="px-4 py-3">Salary Structure (Gross)</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3 text-right">Actions</th>
+                <th className="px-5 py-4">Employee</th>
+                <th className="px-5 py-4">Department & Role</th>
+                <th className="px-5 py-4">Contact</th>
+                <th className="px-5 py-4">Salary Structure (Gross)</th>
+                <th className="px-5 py-4">Status</th>
+                <th className="px-5 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 font-medium">
+            <tbody className="divide-y divide-white/5 font-medium">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-10 text-slate-400">
-                    <RefreshCw className="w-5 h-5 animate-spin mx-auto mb-2 text-blue-500" />
+                  <td colSpan={6} className="text-center py-12 text-slate-400">
+                    <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-blue-500" />
                     <span>Loading directory records...</span>
                   </td>
                 </tr>
               ) : employees.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-10 text-slate-400">
+                  <td colSpan={6} className="text-center py-12 text-slate-400">
                     No employee records found matching your filters.
                   </td>
                 </tr>
               ) : (
                 employees.map(emp => (
-                  <tr key={emp.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition">
-                    <td className="px-4 py-3">
-                      <div>
-                        <span className="font-bold text-slate-900 dark:text-white block">{emp.full_name}</span>
-                        <span className="text-[10px] text-slate-400 font-mono">{emp.code}</span>
+                  <tr key={emp.id} className="hover:bg-white/[0.04] transition">
+                    <td className="px-5 py-4">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600/30 to-indigo-600/30 border border-blue-500/30 flex items-center justify-center font-bold text-blue-300 text-xs shadow-sm">
+                          {emp.full_name?.charAt(0) || 'E'}
+                        </div>
+                        <div>
+                          <span className="font-bold text-white text-sm block">{emp.full_name}</span>
+                          <span className="text-[11px] text-slate-400 font-mono">{emp.code}</span>
+                        </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-5 py-4">
                       <div>
-                        <span className="font-semibold text-slate-800 dark:text-slate-200 block">{emp.designation_name || 'Staff'}</span>
-                        <span className="text-[10px] text-blue-600 dark:text-blue-400">{emp.department_name || 'General'}</span>
+                        <span className="font-semibold text-slate-200 block">{emp.designation_name || 'Staff'}</span>
+                        <span className="text-[11px] text-blue-400 font-medium">{emp.department_name || 'General'}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-5 py-4">
                       <div>
-                        <span className="text-slate-600 dark:text-slate-400 block">{emp.email}</span>
-                        <span className="text-[10px] text-slate-400">{emp.phone || 'N/A'}</span>
+                        <span className="text-slate-300 block">{emp.email}</span>
+                        <span className="text-[11px] text-slate-500 font-mono">{emp.phone || 'N/A'}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-5 py-4">
                       {emp.salary_structure ? (
                         <div>
-                          <span className="font-bold text-emerald-600 block">
+                          <span className="font-bold text-emerald-400 block text-sm">
                             Rs. {emp.salary_structure.gross?.toLocaleString()}
                           </span>
                           <span className="text-[10px] text-slate-400">
@@ -344,15 +354,15 @@ EMP-103,Hamza Tariq,hamza.tariq@saylaniit.com,Sales,Account Executive,55000,2026
                         <span className="text-slate-400">Confidential</span>
                       )}
                     </td>
-                    <td className="px-4 py-3">
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40">
+                    <td className="px-5 py-4">
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 uppercase">
                         {emp.status}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-right">
+                    <td className="px-5 py-4 text-right">
                       <button
                         onClick={() => open360Profile(emp.id)}
-                        className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 font-bold hover:bg-blue-100 transition"
+                        className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 text-blue-300 font-bold border border-blue-500/30 transition shadow-sm"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         <span>360 Profile</span>
@@ -367,20 +377,20 @@ EMP-103,Hamza Tariq,hamza.tariq@saylaniit.com,Sales,Account Executive,55000,2026
 
         {/* Pagination Bar */}
         {totalPages > 1 && (
-          <div className="p-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+          <div className="p-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
             <span>Page {page} of {totalPages}</span>
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-2">
               <button
                 disabled={page <= 1}
                 onClick={() => setPage(page - 1)}
-                className="p-1 rounded border border-slate-200 dark:border-slate-700 disabled:opacity-40"
+                className="p-1.5 rounded-lg border border-white/10 hover:bg-white/5 disabled:opacity-30 transition"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={page >= totalPages}
                 onClick={() => setPage(page + 1)}
-                className="p-1 rounded border border-slate-200 dark:border-slate-700 disabled:opacity-40"
+                className="p-1.5 rounded-lg border border-white/10 hover:bg-white/5 disabled:opacity-30 transition"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
