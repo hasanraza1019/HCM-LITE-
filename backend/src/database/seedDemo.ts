@@ -34,9 +34,11 @@ async function upsertDesignation(name: string, department_id: number): Promise<n
   return id;
 }
 
-async function seed() {
+export async function runDemoSeed(disconnect = false): Promise<void> {
   console.log('--- Seeding HCM Lite Demo Dataset into MongoDB (Saylani Hackathon) ---');
-  await connectDB();
+  if (mongoose.connection.readyState !== 1) {
+    await connectDB();
+  }
 
   const now = new Date().toISOString();
   const todayStr = now.substring(0, 10);
@@ -346,11 +348,16 @@ async function seed() {
   console.log('3. Employee: ali.khan@saylaniit.com  /  Employee@123');
   console.log('---------------------------------------------------------');
 
-  await mongoose.disconnect();
+  if (disconnect) {
+    await mongoose.disconnect();
+  }
 }
 
-seed().catch(async err => {
-  console.error('Seed error:', err);
-  await mongoose.disconnect();
-  process.exit(1);
-});
+// Only auto-run if executed directly as a standalone CLI script
+if (process.argv[1] && process.argv[1].includes('seedDemo')) {
+  runDemoSeed(true).catch(async err => {
+    console.error('Seed error:', err);
+    await mongoose.disconnect();
+    process.exit(1);
+  });
+}

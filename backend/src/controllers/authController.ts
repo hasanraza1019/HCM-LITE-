@@ -11,6 +11,7 @@ import {
 } from '../database/models.js';
 import { JWT_SECRET } from '../middleware/auth.js';
 import { logAudit } from '../utils/audit.js';
+import { runDemoSeed } from '../database/seedDemo.js';
 
 async function getPopulatedEmployee(employeeId?: number | null) {
   if (!employeeId) return null;
@@ -143,6 +144,22 @@ export async function firstRunSetup(req: Request, res: Response): Promise<void> 
   }
 }
 
+export async function seedDemoData(_req: Request, res: Response): Promise<void> {
+  try {
+    await runDemoSeed(false);
+    res.json({
+      message: 'Demo dataset successfully seeded into MongoDB Atlas!',
+      credentials: {
+        admin: { email: 'admin@saylaniit.com', password: 'Admin@123' },
+        hr: { email: 'hr@saylaniit.com', password: 'Hr@123' },
+        employee: { email: 'ali.khan@saylaniit.com', password: 'Employee@123' }
+      }
+    });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || 'Failed to seed demo data' });
+  }
+}
+
 export async function login(req: Request, res: Response): Promise<void> {
   try {
     const { email, password } = req.body;
@@ -151,7 +168,20 @@ export async function login(req: Request, res: Response): Promise<void> {
       return;
     }
 
-    const user = (await User.findOne({ email: email.toLowerCase().trim() }).lean()) as any;
+    const normalizedEmail = email.toLowerCase().trim();
+    let user = (await User.findOne({ email: normalizedEmail }).lean()) as any;
+
+    // Auto-heal / on-demand seed for official demo accounts if not yet initialized in MongoDB
+    if (!user && ['admin@saylaniit.com', 'hr@saylaniit.com', 'ali.khan@saylaniit.com', 'sara.ahmed@saylaniit.com', 'usman.tariq@saylaniit.com'].includes(normalizedEmail)) {
+      console.log(`Demo account ${normalizedEmail} requested but not present. Auto-seeding MongoDB Atlas...`);
+      try {
+        await runDemoSeed(false);
+        user = (await User.findOne({ email: normalizedEmail }).lean()) as any;
+      } catch (seedErr: any) {
+        console.error('Auto-seed error:', seedErr);
+      }
+    }
+
     if (!user) {
       res.status(401).json({ error: 'Invalid email or password' });
       return;

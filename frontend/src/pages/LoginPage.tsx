@@ -56,6 +56,20 @@ export function LoginPage() {
     setError(null);
   };
 
+  const handleSeedDemo = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      await api.post('/auth/seed-demo', {});
+      alert('Demo accounts & company data successfully seeded into MongoDB Atlas!');
+      handleDemoFill('admin@saylaniit.com', 'Admin@123');
+    } catch (err: any) {
+      setError(err.message || 'Failed to seed demo data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-mesh-dark relative flex items-center justify-center p-4 sm:p-6 overflow-hidden">
       {/* Background Decorative Ambient Glows */}
@@ -113,6 +127,16 @@ export function LoginPage() {
                 className="py-1.5 px-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 font-bold text-[11px] transition text-center"
               >
                 Employee
+              </button>
+            </div>
+            <div className="mt-2.5 pt-2 border-t border-slate-800/80 flex items-center justify-between">
+              <span className="text-[10px] text-slate-500">First time or empty DB?</span>
+              <button
+                type="button"
+                onClick={handleSeedDemo}
+                className="text-[10px] text-indigo-400 hover:text-indigo-300 font-bold underline transition"
+              >
+                ⚡ Initialize Demo Data in Atlas
               </button>
             </div>
           </div>

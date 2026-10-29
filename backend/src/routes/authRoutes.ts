@@ -3,6 +3,7 @@ import {
   getSystemStatus,
   firstRunSetup,
   login,
+  seedDemoData,
   changePassword,
   getCurrentUser,
   listUsers,
@@ -18,6 +19,7 @@ const router = Router();
 router.get('/status', getSystemStatus);
 router.post('/setup', firstRunSetup);
 router.post('/login', login);
+router.post('/seed-demo', seedDemoData);
 
 // Authenticated routes
 router.use(authenticateToken);
